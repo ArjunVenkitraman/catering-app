@@ -1,7 +1,14 @@
 import axios from 'axios';
 import { ApiResponse, Dish, Ingredient, RecipeMapping, Event, GroceryList } from '../types';
 
-const api = axios.create({ baseURL: '/api/v1' });
+const baseURL = (() => {
+  const raw = (import.meta as any).env?.VITE_API_BASE_URL as string | undefined;
+  const trimmed = raw?.trim();
+  if (!trimmed) return '/api/v1';
+  return `${trimmed.replace(/\/+$/, '')}/api/v1`;
+})();
+
+const api = axios.create({ baseURL });
 
 api.interceptors.response.use(
   r => r,

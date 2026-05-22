@@ -88,6 +88,14 @@ npm run dev
 
 Open: http://localhost:3000
 
+## Deployment (Free Managed Hosting)
+
+See `DEPLOY_MANAGED_FREE.md` for deploying without Docker using:
+
+- Frontend: Vercel
+- Backend: Render
+- Database: Supabase PostgreSQL
+
 ## API Endpoints
 
 | Method | Endpoint | Description |

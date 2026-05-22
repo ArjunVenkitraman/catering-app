@@ -2,6 +2,7 @@ from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from app.routers import dishes, ingredients, recipes, events
+from app.core.config import settings
 
 app = FastAPI(
     title="Catering Grocery Planner API",
@@ -9,10 +10,13 @@ app = FastAPI(
     version="1.0.0",
 )
 
+_raw_origins = [o.strip() for o in (settings.CORS_ORIGINS or "").split(",") if o.strip()]
+_allow_all_origins = (not _raw_origins) or ("*" in _raw_origins)
+_allow_credentials = False if _allow_all_origins else bool(settings.CORS_ALLOW_CREDENTIALS)
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
-    allow_credentials=True,
+    allow_origins=["*"] if _allow_all_origins else _raw_origins,
+    allow_credentials=_allow_credentials,
     allow_methods=["*"],
     allow_headers=["*"],
 )
