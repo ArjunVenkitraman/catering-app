@@ -41,6 +41,7 @@ Create a **Web Service** from your GitHub repo with:
 
 Set these in the Render service settings:
 
+- `PYTHON_VERSION` = `3.11.11` (prevents build errors from very new Python versions)
 - `DATABASE_URL` = your Supabase asyncpg URL (required)
 - `DEBUG` = `false`
 - `CORS_ORIGINS` = your Vercel app origins (comma-separated), for example:
@@ -87,4 +88,3 @@ Redeploy after adding env vars.
 - If you see CORS errors in the browser console, update `CORS_ORIGINS` in Render to include the exact Vercel domain(s) and redeploy.
 - Render free instances can sleep; first request may be slow (cold start).
 - Supabase free tier can pause when inactive; first DB connection may be slow.
-

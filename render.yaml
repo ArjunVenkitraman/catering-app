@@ -8,6 +8,8 @@ services:
     startCommand: gunicorn -k uvicorn.workers.UvicornWorker -w 2 -b 0.0.0.0:$PORT --timeout 120 app.main:app
     healthCheckPath: /health
     envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.11
       - key: DEBUG
         value: "false"
       - key: DATABASE_URL
@@ -17,4 +19,3 @@ services:
       - key: CORS_ALLOW_CREDENTIALS
         value: "false"
     preDeployCommand: alembic upgrade head
-
