@@ -10,12 +10,14 @@ services:
     envVars:
       - key: PYTHON_VERSION
         value: 3.11.11
-      - key: DEBUG
+      - key: CATERING_DEBUG
         value: "false"
-      - key: DATABASE_URL
+      - key: CATERING_DATABASE_URL
         sync: false
-      - key: CORS_ORIGINS
+      - key: CATERING_CORS_ORIGINS
         sync: false
-      - key: CORS_ALLOW_CREDENTIALS
+      - key: CATERING_CORS_ALLOW_CREDENTIALS
         value: "false"
+      - key: CATERING_HEALTHCHECK_DB
+        value: "true"
     preDeployCommand: alembic upgrade head

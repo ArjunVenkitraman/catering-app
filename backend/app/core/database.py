@@ -1,5 +1,6 @@
 from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine, async_sessionmaker
 from sqlalchemy.orm import DeclarativeBase
+from sqlalchemy import text
 from app.core.config import settings
 
 engine = create_async_engine(settings.DATABASE_URL, echo=settings.DEBUG)
@@ -20,3 +21,8 @@ async def get_db() -> AsyncSession:
             raise
         finally:
             await session.close()
+
+
+async def ping_db() -> None:
+    async with engine.connect() as conn:
+        await conn.execute(text("SELECT 1"))
