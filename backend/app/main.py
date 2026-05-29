@@ -1,3 +1,6 @@
+import logging
+import sys
+import traceback
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
@@ -12,12 +15,20 @@ app = FastAPI(
     version="1.0.0",
 )
 
+logger = logging.getLogger("catering_api")
+
 
 class ExceptionToJsonMiddleware(BaseHTTPMiddleware):
     async def dispatch(self, request: Request, call_next):
         try:
             return await call_next(request)
         except Exception as exc:
+            logger.exception("Unhandled exception on %s %s", request.method, request.url.path)
+            print(
+                f"Unhandled exception on {request.method} {request.url.path}\n{traceback.format_exc()}",
+                file=sys.stderr,
+                flush=True,
+            )
             message = str(exc) if settings.DEBUG else "Internal Server Error"
             return JSONResponse(
                 status_code=500,
